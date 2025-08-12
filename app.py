@@ -17,7 +17,7 @@ from datetime import datetime
 # Set page configuration with a custom icon
 st.set_page_config(page_title="Titanic Time Machine", layout="wide", page_icon="🚢")
 
-# Custom CSS for vintage and modern themes
+# Custom CSS for vintage and modern themes with animations
 st.markdown("""
 <style>
     /* General App Styling */
@@ -70,6 +70,25 @@ st.markdown("""
     /* Theme-Specific Adjustments */
     .vintage-theme .stSidebar { background-color: #f5e6cc; color: #2e2e2e; border-right: 1px solid #8b6f47; }
     .dark-theme .stSidebar { background-color: #1a1a1a; color: #ffffff; border-right: 1px solid #4a4a4a; }
+    
+    /* Title and Content Animation */
+    .title, .subheader, .stMarkdown {
+        animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    /* Custom Spinner Animation */
+    div.stSpinner > div {
+        border-top-color: #4a6ea9 !important;
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
     
     /* Title Styling */
     .title { font-size: 2.5em; text-align: center; color: #2e2e2e; }
@@ -177,20 +196,33 @@ elif section == "Explore the Ship":
 elif section == "Visualize the Voyage":
     st.header("Visualize the Voyage")
     if titanic is not None:
-        # 3D Scatter Plot
-        st.subheader("3D Passenger Analysis")
-        fig_3d = px.scatter_3d(titanic, x='Age', y='Fare', z='Pclass', color='Survived',
-                              title="3D Plot: Age, Fare, and Class by Survival",
-                              labels={'Pclass': 'Passenger Class', 'Survived': 'Survival (0 = No, 1 = Yes)'})
+        # 1. Animated 3D Scatter Plot with Time Simulation
+        st.subheader("Animated 3D Passenger Analysis")
+        titanic['PseudoTime'] = titanic['Pclass']  # Using Pclass as a pseudo-time variable
+        fig_3d = px.scatter_3d(titanic, x='Age', y='Fare', z='Pclass', color='Survived', animation_frame='PseudoTime',
+                              title="Animated 3D Plot: Age, Fare, and Class by Survival",
+                              labels={'Pclass': 'Passenger Class', 'Survived': 'Survival (0 = No, 1 = Yes)'},
+                              range_z=[0.5, 3.5])
         st.plotly_chart(fig_3d)
 
-        # Animated Survival by Class
-        st.subheader("Survival by Class Over Time")
-        fig_anim = px.histogram(titanic, x='Pclass', color='Survived', animation_frame='Pclass',
-                               barmode='group', title="Survival Count by Passenger Class")
-        st.plotly_chart(fig_anim)
+        # 2. Animated Survival Rate by Sex and Class
+        st.subheader("Animated Survival Rate by Sex and Class")
+        survival_rate = titanic.groupby(['Pclass', 'Sex'])['Survived'].mean().reset_index()
+        fig_stacked = px.bar(survival_rate, x='Pclass', y='Survived', color='Sex', animation_frame='Pclass',
+                            title="Survival Rate by Sex and Class", text=survival_rate['Survived'].apply(lambda x: f'{x:.2%}'),
+                            labels={'Survived': 'Survival Rate', 'Pclass': 'Passenger Class'})
+        fig_stacked.update_traces(textposition='auto')
+        st.plotly_chart(fig_stacked)
 
-        # Virtual Deck Map (Simulated)
+        # 3. Animated Age Distribution with KDE
+        st.subheader("Animated Age Distribution by Survival")
+        age_bins = np.arange(0, 80, 5)  # Create age bins
+        titanic['AgeBin'] = pd.cut(titanic['Age'], bins=age_bins, labels=age_bins[:-1])
+        fig_kde = px.histogram(titanic, x='Age', color='Survived', animation_frame='AgeBin', nbins=30,
+                              title="Animated Age Distribution by Survival", marginal="rug")
+        st.plotly_chart(fig_kde)
+
+        # 4. Virtual Deck Map (Simulated)
         st.subheader("Virtual Titanic Deck Map")
         deck_data = titanic.groupby(['Pclass', 'Survived']).size().reset_index(name='Count')
         fig_deck = px.scatter(deck_data, x='Pclass', y='Count', color='Survived', size='Count',
