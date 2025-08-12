@@ -73,9 +73,9 @@ theme_css = """
     
     /* Dynamic Body Styling Based on Theme */
     body {
-        background-color: {background_color};
-        color: {text_color};
-        font-family: {font_family};
+        background-color: {background_color} !important;
+        color: {text_color} !important;
+        font-family: {font_family} !important;
         transition: background-color 0.5s, color 0.5s;
     }
     
@@ -113,8 +113,8 @@ st.markdown(theme_css, unsafe_allow_html=True)
 # Sidebar for theme selection and navigation
 st.sidebar.title("Titanic Time Machine")
 theme = st.sidebar.selectbox("Choose Theme", ["Vintage", "Modern", "Dark"])
-section = st.sidebar.radio("Navigate", ["Welcome Aboard", "Explore the Ship", "Visualize the Voyage", "Predict Your Fate", "Model Insights", "Survival Challenge"])
 st.sidebar.write(f"Selected theme: {theme}")  # Debug output
+section = st.sidebar.radio("Navigate", ["Welcome Aboard", "Explore the Ship", "Visualize the Voyage", "Predict Your Fate", "Model Insights", "Survival Challenge"])
 
 # Load dataset with caching
 @st.cache_data
@@ -132,7 +132,7 @@ titanic = load_data()
 @st.cache_resource
 def load_model():
     try:
-        with open('model .pkl', 'rb') as f:
+        with open('model.pkl', 'rb') as f:
             model = pickle.load(f)
         return model
     except Exception as e:
