@@ -17,10 +17,8 @@ from datetime import datetime
 # Set page configuration with a custom icon
 st.set_page_config(page_title="Titanic Time Machine", layout="wide", page_icon="🚢")
 
-st.sidebar.write(f"Selected theme: {theme}")  # Debug output
-
-# Custom CSS for themes with dynamic application
-theme_css = """
+# Custom CSS for vintage and modern themes with animations
+st.markdown("""
 <style>
     /* General App Styling */
     .vintage-theme { background-color: #f5e6cc; color: #2e2e2e; font-family: 'Garamond', serif; }
@@ -69,17 +67,9 @@ theme_css = """
         font-weight: bold;
     }
     
-    /* Theme-Specific Adjustments for Sidebar */
+    /* Theme-Specific Adjustments */
     .vintage-theme .stSidebar { background-color: #f5e6cc; color: #2e2e2e; border-right: 1px solid #8b6f47; }
     .dark-theme .stSidebar { background-color: #1a1a1a; color: #ffffff; border-right: 1px solid #4a4a4a; }
-    
-    /* Dynamic Body Styling Based on Theme */
-    body {
-        background-color: {background_color} !important;
-        color: {text_color} !important;
-        font-family: {font_family} !important;
-        transition: background-color 0.5s, color 0.5s;
-    }
     
     /* Title and Content Animation */
     .title, .subheader, .stMarkdown {
@@ -104,17 +94,17 @@ theme_css = """
     .title { font-size: 2.5em; text-align: center; color: #2e2e2e; }
     .subheader { color: #4682b4; }
 </style>
-""".format(
-    background_color={'Vintage': '#f5e6cc', 'Modern': '#f0f2f6', 'Dark': '#1a1a1a'}[theme],
-    text_color={'Vintage': '#2e2e2e', 'Modern': '#1a1a1a', 'Dark': '#ffffff'}[theme],
-    font_family={'Vintage': '"Garamond", serif', 'Modern': '"Arial", sans-serif', 'Dark': '"Arial", sans-serif'}[theme]
-)
-
-st.markdown(theme_css, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Sidebar for theme selection and navigation
 st.sidebar.title("Titanic Time Machine")
 theme = st.sidebar.selectbox("Choose Theme", ["Vintage", "Modern", "Dark"])
+if theme == "Vintage":
+    st.markdown('<style>body { background-color: #f5e6cc; font-family: "Garamond", serif; }</style>', unsafe_allow_html=True)
+elif theme == "Dark":
+    st.markdown('<style>body { background-color: #1a1a1a; color: #ffffff; font-family: "Arial", sans-serif; }</style>', unsafe_allow_html=True)
+else:
+    st.markdown('<style>body { background-color: #f0f2f6; font-family: "Arial", sans-serif; }</style>', unsafe_allow_html=True)
 
 section = st.sidebar.radio("Navigate", ["Welcome Aboard", "Explore the Ship", "Visualize the Voyage", "Predict Your Fate", "Model Insights", "Survival Challenge"])
 
