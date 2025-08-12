@@ -20,11 +20,58 @@ st.set_page_config(page_title="Titanic Time Machine", layout="wide", page_icon="
 # Custom CSS for vintage and modern themes
 st.markdown("""
 <style>
+    /* General App Styling */
     .vintage-theme { background-color: #f5e6cc; color: #2e2e2e; font-family: 'Garamond', serif; }
     .modern-theme { background-color: #f0f2f6; color: #1a1a1a; font-family: 'Arial', sans-serif; }
     .dark-theme { background-color: #1a1a1a; color: #ffffff; font-family: 'Arial', sans-serif; }
     .stButton>button { background-color: #4682b4; color: white; border-radius: 10px; }
-    .stSidebar { background-color: #e6e6e6; }
+    
+    /* Sidebar Styling */
+    .stSidebar {
+        background-color: #2b4066; /* Deep navy blue for a Titanic feel */
+        color: #e0e7ff; /* Light off-white for text */
+        padding: 20px;
+        border-right: 1px solid #a8b5c3; /* Subtle steel gray border */
+    }
+    .stSidebar .stRadio > label {
+        color: #e0e7ff; /* Theme selector text */
+    }
+    .stSidebar .stRadio > div > div {
+        background-color: #3b5582; /* Darker blue for dropdown background */
+        border: 1px solid #a8b5c3; /* Steel gray border */
+        border-radius: 5px;
+    }
+    .stSidebar .stRadio [type="radio"] + div span {
+        color: #e0e7ff; /* Radio option text */
+    }
+    .stSidebar .stRadio [type="radio"]:checked + div span {
+        color: #ffffff; /* Highlighted option text */
+        background-color: #4a6ea9; /* Light blue highlight */
+    }
+    .stSidebar .css-1aumxhk { /* Target navigation items */
+        color: #e0e7ff;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    .stSidebar .css-1aumxhk:hover {
+        background-color: #4a6ea9; /* Hover effect */
+        color: #ffffff;
+    }
+    .stSidebar .css-1aumxhk[data-testid="stSidebarNavItem"]:before {
+        content: "⦿ "; /* Custom bullet or icon */
+        color: #a8b5c3; /* Steel gray bullet */
+    }
+    .stSidebar .css-1aumxhk[data-testid="stSidebarNavItem"][aria-selected="true"] {
+        background-color: #3b5582; /* Selected item background */
+        color: #ffffff;
+        font-weight: bold;
+    }
+    
+    /* Theme-Specific Adjustments */
+    .vintage-theme .stSidebar { background-color: #f5e6cc; color: #2e2e2e; border-right: 1px solid #8b6f47; }
+    .dark-theme .stSidebar { background-color: #1a1a1a; color: #ffffff; border-right: 1px solid #4a4a4a; }
+    
+    /* Title Styling */
     .title { font-size: 2.5em; text-align: center; color: #2e2e2e; }
     .subheader { color: #4682b4; }
 </style>
