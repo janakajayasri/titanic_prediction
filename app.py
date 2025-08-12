@@ -97,7 +97,7 @@ if section == "Welcome Aboard":
     visualize survival patterns, and predict your own survival odds using a machine learning model. 
     Will you survive the journey? Navigate through the sections to find out!
     """)
-    st.image("https://upload.wikimedia.org/wikipedia/commons/6/6e/Titanic_Starboard_Side_%28Colorized%29.png", caption="RMS Titanic, 1912")
+    st.image("titanic.jpg", caption="RMS Titanic, 1912")
 
 # Explore the Ship Section
 elif section == "Explore the Ship":
