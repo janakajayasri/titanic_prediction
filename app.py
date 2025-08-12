@@ -124,7 +124,7 @@ titanic = load_data()
 @st.cache_resource
 def load_model():
     try:
-        with open('model.pkl', 'rb') as f:
+        with open('model .pkl', 'rb') as f:
             model = pickle.load(f)
         return model
     except Exception as e:
