@@ -17,6 +17,8 @@ from datetime import datetime
 # Set page configuration with a custom icon
 st.set_page_config(page_title="Titanic Time Machine", layout="wide", page_icon="🚢")
 
+st.sidebar.write(f"Selected theme: {theme}")  # Debug output
+
 # Custom CSS for themes with dynamic application
 theme_css = """
 <style>
@@ -113,7 +115,7 @@ st.markdown(theme_css, unsafe_allow_html=True)
 # Sidebar for theme selection and navigation
 st.sidebar.title("Titanic Time Machine")
 theme = st.sidebar.selectbox("Choose Theme", ["Vintage", "Modern", "Dark"])
-st.sidebar.write(f"Selected theme: {theme}")  # Debug output
+
 section = st.sidebar.radio("Navigate", ["Welcome Aboard", "Explore the Ship", "Visualize the Voyage", "Predict Your Fate", "Model Insights", "Survival Challenge"])
 
 # Load dataset with caching
