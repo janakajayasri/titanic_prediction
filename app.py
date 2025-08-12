@@ -103,9 +103,9 @@ theme_css = """
     .subheader { color: #4682b4; }
 </style>
 """.format(
-    background_color={'Vintage': '#f5e6cc', 'Modern': '#f0f2f6', 'Dark': '#1a1a1a'}[theme_css],
-    text_color={'Vintage': '#2e2e2e', 'Modern': '#1a1a1a', 'Dark': '#ffffff'}[theme_css],
-    font_family={'Vintage': '"Garamond", serif', 'Modern': '"Arial", sans-serif', 'Dark': '"Arial", sans-serif'}[theme_css]
+    background_color={'Vintage': '#f5e6cc', 'Modern': '#f0f2f6', 'Dark': '#1a1a1a'}[theme],
+    text_color={'Vintage': '#2e2e2e', 'Modern': '#1a1a1a', 'Dark': '#ffffff'}[theme],
+    font_family={'Vintage': '"Garamond", serif', 'Modern': '"Arial", sans-serif', 'Dark': '"Arial", sans-serif'}[theme]
 )
 
 st.markdown(theme_css, unsafe_allow_html=True)
@@ -114,6 +114,7 @@ st.markdown(theme_css, unsafe_allow_html=True)
 st.sidebar.title("Titanic Time Machine")
 theme = st.sidebar.selectbox("Choose Theme", ["Vintage", "Modern", "Dark"])
 section = st.sidebar.radio("Navigate", ["Welcome Aboard", "Explore the Ship", "Visualize the Voyage", "Predict Your Fate", "Model Insights", "Survival Challenge"])
+st.sidebar.write(f"Selected theme: {theme}")  # Debug output
 
 # Load dataset with caching
 @st.cache_data
