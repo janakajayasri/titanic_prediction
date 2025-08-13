@@ -95,9 +95,13 @@ http://localhost:8501
 ---
 
 ## 📷 Screenshots
-*(Optional – add screenshots of your app interface here)*
+![alt text](1.png)
+![alt text](2.png)
+![alt text](3.png)
+
 
 ---
 
 ## 📜 License
 This project is licensed under the MIT License.
+
